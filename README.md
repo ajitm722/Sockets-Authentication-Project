@@ -73,11 +73,17 @@ g++ client2.cpp -o client2 -lssl -lcrypto
 ### Option 1 (Insecure)
 
 - 📄 `opt1 - password visible.png`: Password sent as plaintext.
+  
   ![1](assets/opt1%20-%20password%20visible.png)
+
 - 📄 `opt1 - authentication succesful.png`: Shows successful login.
+  
   ![2](assets/opt1%20-%20authentication%20succesful.png)
+
 - 📄`opt1 - authentication failure.png`: Failed login.
+  
   ![3](assets/opt1%20-%20authentication%20failure.png)
+
 - 📄`opt1 cli.png`: Terminal run of client/server.
   
   ![4](assets/opt1%20cli.png)
@@ -85,6 +91,7 @@ g++ client2.cpp -o client2 -lssl -lcrypto
 ### Option 2 (Secure)
 
 - 📄 `opt2 - authentication succesful without sending password over network.png`: Challenge-response verification without leaking password.
+  
   ![5](assets/opt2%20-%20authentication%20succesful%20without%20sending%20password%20over%20network.png)
 
 - 📄 `opt2 cli.png`: Terminal run with secure HMAC-based flow.

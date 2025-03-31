@@ -103,7 +103,7 @@ int create_server_socket()
 }
 
 // === FUNCTION: Read data from socket ===
-std::string read_message(int sock)
+std::string read_message(const int sock)
 {
     char buffer[1024]{};                                    // Temporary buffer for incoming message
     ssize_t bytes_read{read(sock, buffer, sizeof(buffer))}; // POSIX read()
@@ -120,28 +120,28 @@ std::string read_message(int sock)
 }
 
 // === FUNCTION: Send message to socket ===
-void send_message(int sock, const std::string &msg)
+void send_message(const int sock, const std::string &msg)
 {
     // Write the entire message over the TCP connection
     send(sock, msg.c_str(), msg.length(), 0);
 }
 
 // === FUNCTION: Handle One Client Session ===
-void handle_client(int client_sock)
+void handle_client(const int client_sock)
 {
     // Step 1: Expect "hello" from client
-    std::string hello = read_message(client_sock);
+    std::string hello{read_message(client_sock)};
     std::cout << "Client: " << hello << "\n";
 
     // Step 2: Generate a random challenge and send it to the client
-    std::string challenge = generate_challenge();
+    std::string challenge{generate_challenge()};
     send_message(client_sock, challenge);
 
     // Step 3: Receive client’s HMAC digest
-    std::string client_digest = read_message(client_sock);
+    std::string client_digest{read_message(client_sock)};
 
     // Step 4: Compute our own digest using the same challenge + secret
-    std::string expected_digest = compute_hmac(challenge, SHARED_SECRET);
+    std::string expected_digest{compute_hmac(challenge, SHARED_SECRET)};
 
     // Step 5: Compare the two HMAC results
     std::string response{};

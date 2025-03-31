@@ -70,10 +70,10 @@ int create_client_socket()
 }
 
 // === Function: Read data from socket ===
-std::string read_message(int sock)
+std::string read_message(const int sock)
 {
     char buffer[1024]{};
-    ssize_t bytes_read = read(sock, buffer, sizeof(buffer));
+    ssize_t bytes_read{read(sock, buffer, sizeof(buffer))};
 
     if (bytes_read > 0)
     {
@@ -86,29 +86,29 @@ std::string read_message(int sock)
 }
 
 // === Function: Send string message to socket ===
-void send_message(int sock, const std::string &msg)
+void send_message(const int sock, const std::string &msg)
 {
     send(sock, msg.c_str(), msg.length(), 0); // Standard POSIX send()
 }
 
 // === Function: Perform challenge-response protocol with server ===
-void client_interaction(int sock)
+void client_interaction(const int sock)
 {
     // Step 1: Send initial hello to initiate conversation
     send_message(sock, "hello");
 
     // Step 2: Receive challenge string from server
-    std::string challenge = read_message(sock);
+    std::string challenge{read_message(sock)};
     std::cout << "Received challenge: " << challenge << "\n";
 
     // Step 3: Compute HMAC of challenge using shared secret
-    std::string digest = compute_hmac(challenge, SHARED_SECRET);
+    std::string digest{compute_hmac(challenge, SHARED_SECRET)};
 
     // Step 4: Send computed digest back to server
     send_message(sock, digest);
 
     // Step 5: Receive authentication result (success or failure)
-    std::string response = read_message(sock);
+    std::string response{read_message(sock)};
     std::cout << "Server: " << response << "\n";
 }
 
@@ -118,7 +118,7 @@ int main()
     try
     {
         // Connect to the server
-        int sock = create_client_socket();
+        int sock{create_client_socket()};
 
         // Run the client-side interaction
         client_interaction(sock);

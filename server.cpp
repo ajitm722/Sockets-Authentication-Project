@@ -38,7 +38,7 @@ int create_server_socket()
 }
 
 // Read a message from a connected socket
-std::string read_message(int sock)
+std::string read_message(const int sock)
 {
     char buffer[1024]{};
     ssize_t bytes_read{read(sock, buffer, sizeof(buffer))};
@@ -54,13 +54,13 @@ std::string read_message(int sock)
 }
 
 // Send a message through the connected socket
-void send_message(int sock, const std::string &msg)
+void send_message(const int sock, const std::string &msg)
 {
     send(sock, msg.c_str(), msg.length(), 0);
 }
 
 // Handle client-server interaction
-void handle_client(int client_sock)
+void handle_client(const int client_sock)
 {
     // Step 1: Initial greeting
     send_message(client_sock, "Hello. Send your greeting.");
@@ -77,9 +77,7 @@ void handle_client(int client_sock)
     std::string password{read_message(client_sock)};
 
     // Step 4: Verify credentials
-    std::string response{};
-
-    if (username == "admin" && password == "pass123")
+    if (std::string response{}; username == "admin" && password == "pass123")
     {
         response = "Authentication successful.\n secret_data_from_server...";
         send_message(client_sock, response);

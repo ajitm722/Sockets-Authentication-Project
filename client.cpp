@@ -76,7 +76,7 @@ int create_client_socket()
 }
 
 // Function to read a message from the socket
-std::string read_message(int sock)
+std::string read_message(const int sock)
 {
     char buffer[1024]{};
     ssize_t bytes_read{read(sock, buffer, sizeof(buffer))};
@@ -92,13 +92,13 @@ std::string read_message(int sock)
 }
 
 // Function to send a message to the server
-void send_message(int sock, const std::string &msg)
+void send_message(const int sock, const std::string &msg)
 {
     send(sock, msg.c_str(), msg.length(), 0);
 }
 
 // Function to handle the client interaction workflow
-void client_interaction(int sock)
+void client_interaction(const int sock)
 {
     // Step 1: Initial greeting exchange
     std::string msg{read_message(sock)};
